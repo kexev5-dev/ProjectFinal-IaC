@@ -37,7 +37,7 @@ services:
       - REACT_APP_API_URL=http://backend:5000
 
   jenkins:
-    image: ./jenkins
+    build: ./jenkins
     container_name: jenkins
     ports:
       - "8080:8080"
