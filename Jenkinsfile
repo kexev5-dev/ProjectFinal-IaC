@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/tu_usuario/tu_repo.git', credentialsId: 'git_credentials'
+                git branch: 'main', url: 'https://github.com/kexev5-dev/ProjectFinal-IaC.git', credentialsId: 'git_credentials'
             }
         }
 
