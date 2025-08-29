@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:20'  // o la versión que necesites
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     environment {
         BACKEND_IMAGE = "mi_backend:latest"
@@ -9,7 +14,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/kexev5-dev/ProjectFinal-IaC.git', credentialsId: 'git_credentials'
+                git branch: 'master', url: 'https://github.com/kexev5-dev/ProjectFinal-IaC.git'
             }
         }
 
@@ -17,7 +22,6 @@ pipeline {
             steps {
                 dir('backend') {
                     sh 'npm install'
-                    // sh 'npm run build'  // si aplicable
                     sh 'npm test || echo "Tests fallidos pero continuamos"'
                 }
             }
@@ -34,7 +38,6 @@ pipeline {
 
         stage('Deploy Backend y Frontend') {
             steps {
-                // Solo levanta backend y frontend, mantiene DB y Jenkins intactos
                 sh 'docker-compose up -d --build backend frontend'
             }
         }
