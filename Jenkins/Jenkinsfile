@@ -39,7 +39,11 @@ pipeline {
         stage('Deploy Backend y Frontend') {
             agent any  // 👈 Esto fuerza que se ejecute en Jenkins, no en node:20
             steps {
-                sh 'docker compose up -d --build backend frontend'
+                sh '''
+                  echo "Levantando servicios con Docker Compose..."
+                  docker compose down
+                  docker compose up -d --build
+                '''
             }
         }
     }
